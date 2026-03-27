@@ -1,1 +1,0 @@
-# LSEG-Quant-Challenge

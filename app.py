@@ -1,58 +1,65 @@
-# app.py
-
 import streamlit as st
 import sys
 import os
 
-# --- HACK PENTRU MACOS: Forțăm Python să vadă folderele 'core' și 'config' ---
+# HACK: Adăugăm folderele la path
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-from core.components import render_mermaid
+from core.components import render_interactive_graph, apply_custom_css
 from core.llm import generate_diagram_code
-from config.settings import MODEL_NAME
+from config.settings import MODEL_NAME, PROMPTS
 
-# --- SETĂRI PAGINĂ ---
-st.set_page_config(page_title="Generator Diagrame", page_icon="📊", layout="wide")
-st.title("Generare Diagrame Logice Local 🧠 -> 📊")
+st.set_page_config(page_title="Graph Designer Pro", page_icon="🕸️", layout="wide")
+apply_custom_css()
 
-# Inițializare memorie chat
+# --- SIDEBAR ---
+with st.sidebar:
+    st.title("⚙️ Configurare")
+    persona_choice = st.selectbox("Alege Expertul:", list(PROMPTS.keys()))
+    st.divider()
+    st.info(f"Model activ: {MODEL_NAME}")
+    if st.button("🗑️ Șterge Istoric"):
+        st.session_state.messages = []
+        st.rerun()
+
+st.title(f"Analiză AI: {persona_choice} 🧠")
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Afișare istoric mesaje
+# Redăm istoricul
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         if msg["type"] == "text":
             st.write(msg["content"])
-        elif msg["type"] == "mermaid":
-            render_mermaid(msg["content"])
-            with st.expander("Vezi codul Mermaid generat"):
-                st.code(msg["content"], language="mermaid")
+        elif msg["type"] == "graph":
+            render_interactive_graph(msg["content"])
 
-# --- FLUXUL PRINCIPAL ---
-if prompt := st.chat_input("Descrie fluxul pe care vrei să-l transformi în diagramă..."):
+# --- INPUT ---
+if prompt := st.chat_input("Descrie procesul sau arhitectura..."):
     
     st.session_state.messages.append({"role": "user", "content": prompt, "type": "text"})
     with st.chat_message("user"):
         st.write(prompt)
 
     with st.chat_message("assistant"):
-        with st.spinner(f"Modelul {MODEL_NAME} gândește..."):
+        with st.spinner(f"Expertul '{persona_choice}' lucrează..."):
             
-            # Apelăm funcția din backend
-            mermaid_code, raw_output, error = generate_diagram_code(prompt)
+            graph_data, raw_output, error = generate_diagram_code(prompt, persona_choice)
             
             if error:
                 st.error(error)
-                if raw_output:
-                    with st.expander("Vezi răspunsul brut (Debug / Thinking)"):
-                        st.write(raw_output)
-                st.session_state.messages.append({"role": "assistant", "content": error, "type": "text"})
+                with st.expander("Vezi Thinking Process"):
+                    st.write(raw_output)
             else:
-                # Succes! Randăm diagrama
-                render_mermaid(mermaid_code)
-                with st.expander("Vezi codul Mermaid generat"):
-                    st.code(mermaid_code, language="mermaid")
+                # Randăm și salvăm
+                render_interactive_graph(graph_data)
                 
-                # Salvăm în istoric
-                st.session_state.messages.append({"role": "assistant", "content": mermaid_code, "type": "mermaid"})
+                with st.expander("Vezi structura JSON"):
+                    st.json(graph_data)
+                
+                st.session_state.messages.append({
+                    "role": "assistant", 
+                    "content": graph_data, 
+                    "type": "graph"
+                })

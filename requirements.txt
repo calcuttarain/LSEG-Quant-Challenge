@@ -2,3 +2,4 @@ streamlit
 ollama
 PyQt6 
 PyQt6-WebEngine
+streamlit-agraph
