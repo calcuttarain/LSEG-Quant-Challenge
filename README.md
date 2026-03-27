@@ -1,4 +1,4 @@
-# Graph Designer Pro
+# Graph Designer Pro 3000
 
 ## Overview
 Graph Designer Pro is an interactive, AI-powered web application designed to generate, visualize, and dynamically modify network diagrams and flowcharts using natural language. By leveraging local Large Language Models (LLMs) via Ollama, the system translates textual descriptions of processes, architectures, or conceptual maps into structured JSON data. This data is subsequently rendered as an interactive, physics-enabled network graph.
