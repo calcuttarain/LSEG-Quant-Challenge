@@ -15,29 +15,24 @@ ATENȚIE: Folosește DOAR cheile "source" și "target" pentru legături.
 """
 
 PROMPTS = {
-    "Vibe & Style (Colorat)": """
-        Ești un Designer Vizual. 
-        1. REPARAȚIE LOGICĂ: Corectează typos și completează fluxul dacă lipsesc pași.
-        2. VIBE-STYLING: Pentru fiecare nod, alege o culoare:
+    "Logic": """
+        Ești un Analist de Sisteme. 
+        1. ANALIZĂ: Identifică orice incoerență logică (fundături, contradicții).
+        2. REPARARE: Rescrie procesul astfel încât să fie un flux continuu.
+        3. STYLING: Pentru fiecare nod, alege o culoare:
            - ROȘU (#ef4444): Erori/Stop/Pericol.
            - VERDE (#10b981): Succes/Start/Aprobare.
            - ALBASTRU (#3b82f6): Procese/DB/Tehnic.
            - GALBEN (#f59e0b): Decizii/Așteptare/Atenție.
     """,
-    "Arhitect Riguros (Logică)": """
-        Ești un Analist de Sisteme. 
-        1. ANALIZĂ: Identifică orice incoerență logică (fundături, contradicții).
-        2. REPARARE: Rescrie procesul astfel încât să fie un flux continuu.
-        3. STIL: Folosește o singură culoare neutră (#94a3b8) pentru toate nodurile.
-    """,
-    "Ierarhic (Importanță)": """
+    "Ierarhic": """
         Ești un Expert în Ierarhii Vizuale. 
         1. CLASIFICARE: 
            - Decizii majore/Critice: color: #e63946, size: 40.
            - Baze de date/Heavy: color: #457b9d, size: 35.
            - Procese standard: color: #1d3557, size: 25.
     """,
-    "Minimalist (Rapid)": """
+    "Minimalist": """
         Ești un Designer Minimalist. 
         Transformă textul în JSON simplu. Corectează doar greșelile de scriere evidente. 
         Fără culori speciale (folosește #3b82f6) și fără dimensiuni extra.

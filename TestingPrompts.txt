@@ -1,78 +1,9 @@
-Exemplu
-I want an orchestrator tool that receives a user query append history applies azure guardrails and then   decides to which component to use from a sentiment; summarizations; or drawing tools 
-I want the tools to be in red and the classificatory in green
+Give me a diagram for my AI-use case: the user query is sent to a prompt guardrail node, and then it goes to make an LLM API call through gateway. If successful, it goes through an output guardrail to the user.
 
-Chatbot architecture
-Cloud architecture for a service that can take PDF files and allow users to have AI chat sessions regarding the content of the PDF files. Vectorize the PDF files using OpenAI's Embedding API and store them on a cloud vector database and store the text chunks in a separate storage. During a chat session, when a user asks a question, turn the question in to a vector using OpenAI's embedding API, then query the vector database. Use query result vectors to retrieve the associated text chunks. Query OpenAI's chat API with the retrieved text chunks and the original user question. Return results from OpenAI's chat API to the user. Use AWS and OpenAI infrastructure where applicable.
+Make my family tree. I am Gigel, my Mom is Alice, my father is Bob. I have 2 brothers. My brother andrew is single. My sister in Law Jannet is married with Victor. My aunts from my father side are both called Jane and their father is called Markus
 
-Auth0 auth flow
-User selects Login within application.
-Auth0's SDK redirects user to Auth0 Authorization Server (/authorize endpoint).
-Auth0 Authorization Server redirects user to login and authorization prompt.
-User authenticates using one of the configured login options, and may see a consent prompt listing the permissions Auth0 will give to the application.
-Auth0 Authorization Server redirects user back to application with single-use authorization code.
-Auth0's SDK sends authorization code, application's client ID, and application's credentials, such as client secret or Private Key JWT, to Auth0 Authorization Server (/oauth/token endpoint).
-Auth0 Authorization Server verifies authorization code, application's client ID, and application's credentials.
-Auth0 Authorization Server responds with an ID token and access token (and optionally, a refresh token).
-Application can use the access token to call an API to access information about the user.
-API responds with requested data.
+Create my vacation itinerary: Starting from Bucharest I am going to Budapest for 3 nights and on the way there I will spend the night in Timisoara. After that, I will go in Vienna for 3 nights and if it snows, I will go to Prague for 4 nights, otherwise in Munich. On my way back I will go through Budapest for a night to rest and maybe a night somewhere nice. You can suggest the last stop
 
-Gig marketplace architecture
-Cloud architecture for a marketplace for freelance developers to find work. Allow authentication via GitHub and LinkedIn. Use machine learning to recommend listings. Use React for the frontend, Vercel for deployment. Use a graph database to store user activities, use a SQL database for job listings. Allow payments to be directly made on the platform via Stripe. Use AWS infrastructure where applicable.
+Recreate the transformer architecture introduced in the paper called "Attention is all you need"
 
-eCommerce SQL schema
-CREATE TABLE CART
-(
-  ID INTEGER PRIMARY KEY NOT NULL,
-  CUSTOMER_ID INTEGER NOT NULL,
-  NAME VARCHAR(50) NOT NULL
-);
-CREATE TABLE CART_ITEM
-(
-  CART_ID INTEGER NOT NULL,
-  PRODUCT_ID INTEGER NOT NULL,
-  ITEM_QTY INTEGER NOT NULL,
-  LAST_UPDATED TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL,
-  PRIMARY KEY ( CART_ID, PRODUCT_ID )
-);
-CREATE TABLE CATEGORY
-(
-  ID INTEGER PRIMARY KEY NOT NULL,
-  NAME VARCHAR(50) NOT NULL,
-  DESCRIPTION CLOB
-);
-CREATE TABLE CUSTOMER
-(
-  ID INTEGER PRIMARY KEY NOT NULL,
-  NAME VARCHAR(100) NOT NULL,
-  PASSWORD VARCHAR(20) NOT NULL,
-  LAST_UPDATED TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL,
-  REGISTRATION_DATE DATE DEFAULT CURRENT_DATE() NOT NULL
-);
-CREATE TABLE PRODUCT
-(
-  ID INTEGER PRIMARY KEY NOT NULL,
-  NAME VARCHAR(50) NOT NULL,
-  DESCRIPTION CLOB NOT NULL,
-  PRICE DECIMAL(5,2) NOT NULL,
-  STOCK_QTY INTEGER NOT NULL,
-  LAST_UPDATED TIMESTAMP DEFAULT CURRENT_TIMESTAMP() NOT NULL,
-  CATEGORY_ID INTEGER NOT NULL
-);
-ALTER TABLE CART ADD FOREIGN KEY ( CUSTOMER_ID ) REFERENCES CUSTOMER ( ID );
-CREATE INDEX FK_CUSTOMERCART_INDEX_1 ON CART ( CUSTOMER_ID );
-ALTER TABLE CART_ITEM ADD FOREIGN KEY ( CART_ID ) REFERENCES CART ( ID );
-ALTER TABLE CART_ITEM ADD FOREIGN KEY ( PRODUCT_ID ) REFERENCES PRODUCT ( ID );
-CREATE INDEX FK_CARTITEMPRODUCT_INDEX_B ON CART_ITEM ( PRODUCT_ID );
-CREATE UNIQUE INDEX UNIQUE_NAME_INDEX_F ON CATEGORY ( NAME );
-ALTER TABLE PRODUCT ADD FOREIGN KEY ( CATEGORY_ID ) REFERENCES CATEGORY ( ID );
-CREATE INDEX FK_PRODUCTCATEGORY_INDEX_1 ON PRODUCT ( CATEGORY_ID );
-
-
-Twitter data model
-Data model for Twitter that includes users, followers, DMs, likes, bookmarks, retweets, tweets, lists
-
-Doctor onboarding flow
-A flow to onboard doctors to an appointment scheduling app:
-- Get practice locations. If more than 4 locations, add to Salesforce and continue. If more than 6 doctors, add to Salesforce, and continue.
-- If taking video calls, ask if authorized in Wyoming. If so, show WY Special Questionnaire. If not, finish onboarding
+A modular AI Diagram Generator has a Streamlit UI connected to a 7-stage pipeline. User input first goes through request parsing, then prompt planning, then LLM-based JSON spec generation (with fallback mechanism), followed by schema validation & auto-repair, rendering to vis.js graph format, style postprocessing, and export to JSON/SVG/PNG. The UI includes a chat panel, settings sidebar for interactive canvas and editing nodes/edges.

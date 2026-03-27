@@ -4,10 +4,10 @@ from streamlit_agraph import agraph, Node, Edge, Config
 def apply_custom_css():
     """Stiluri pentru interfața Streamlit cu un look Financial/Premium."""
     st.markdown("""
-        <style>
+       <style>
         /* Fundal Dark Blue cu degrade fin */
         .stApp {
-            background: radial-gradient(circle at top left, #1e293b, #0f172a);
+            background: #7485ab;
             color: #f1f5f9;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
@@ -21,7 +21,7 @@ def apply_custom_css():
 
         /* Sidebar Glassmorphism */
         [data-testid="stSidebar"] {
-            background-color: rgba(15, 23, 42, 0.95);
+            background-color: #c5d0e8;
             border-right: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -34,7 +34,7 @@ def apply_custom_css():
             font-weight: 600;
             font-size: 1rem;
             letter-spacing: 0.5px;
-            padding: 0.6rem 1.2rem;
+            padding: 0 .6rem 1.2rem;
             box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.4);
             transition: all 0.3s ease;
         }

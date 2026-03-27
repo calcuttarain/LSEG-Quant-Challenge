@@ -9,16 +9,16 @@ from core.components import render_interactive_graph, apply_custom_css
 from core.llm import generate_diagram_code
 from config.settings import MODEL_NAME, PROMPTS
 
-st.set_page_config(page_title="Graph Designer Pro", page_icon="🕸️", layout="wide")
+st.set_page_config(page_title="Graph Designer Pro", layout="wide")
 apply_custom_css()
 
 # --- SIDEBAR ---
 with st.sidebar:
-    st.title("⚙️ Configurare")
+    st.title("Configurare")
     persona_choice = st.selectbox("Alege Expertul:", list(PROMPTS.keys()))
     st.divider()
     st.info(f"Model activ: {MODEL_NAME}")
-    if st.button("🗑️ Șterge Istoric"):
+    if st.button("Șterge Istoric"):
         st.session_state.messages = []
         st.rerun()
 
