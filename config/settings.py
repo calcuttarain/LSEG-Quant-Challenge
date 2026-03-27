@@ -4,6 +4,7 @@ MODEL_NAME = "deepseek-r1:14b"
 BASE_SYSTEM_PROMPT = """
 Răspunde STRICT și EXCLUSIV cu un cod JSON valid încadrat de tag-urile ```json și ```.
 Nu adăuga absolut niciun alt text, salut, sau explicație.
+Dacă utilizatorul îți cere o modificare, pornește de la ultimul grafic (JSON) generat și returnează DOAR noul JSON complet actualizat.
 
 STRUCTURA OBLIGATORIE JSON:
 {

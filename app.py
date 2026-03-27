@@ -22,12 +22,12 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-st.title(f"Analiză AI: {persona_choice} 🧠")
+st.title(f"Analiză AI: {persona_choice} ")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Redăm istoricul
+# Redăm istoricul pe ecran
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         if msg["type"] == "text":
@@ -36,28 +36,32 @@ for msg in st.session_state.messages:
             render_interactive_graph(msg["content"])
 
 # --- INPUT ---
-if prompt := st.chat_input("Descrie procesul sau arhitectura..."):
+if prompt := st.chat_input("Descrie procesul sau cere o modificare la grafic..."):
     
+    # Adăugăm inputul utilizatorului la memorie
     st.session_state.messages.append({"role": "user", "content": prompt, "type": "text"})
+    
     with st.chat_message("user"):
         st.write(prompt)
 
     with st.chat_message("assistant"):
         with st.spinner(f"Expertul '{persona_choice}' lucrează..."):
             
-            graph_data, raw_output, error = generate_diagram_code(prompt, persona_choice)
+            # Trimitem TOT istoricul către funcție
+            graph_data, raw_output, error = generate_diagram_code(st.session_state.messages, persona_choice)
             
             if error:
                 st.error(error)
-                with st.expander("Vezi Thinking Process"):
+                with st.expander("Vezi Thinking Process / Răspuns Brut"):
                     st.write(raw_output)
             else:
-                # Randăm și salvăm
+                # Randăm diagrama
                 render_interactive_graph(graph_data)
                 
                 with st.expander("Vezi structura JSON"):
                     st.json(graph_data)
                 
+                # Salvăm noul graf generat în memorie pentru viitoarele editări
                 st.session_state.messages.append({
                     "role": "assistant", 
                     "content": graph_data, 
